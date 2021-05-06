@@ -2,6 +2,7 @@ class Constant {
     constructor(value){
         this.value = value;
         this.derivative;
+        this.zero = (this.value ? false : true);
     }
     
     print(f){
@@ -18,6 +19,7 @@ class Variable{
         this.coeff = coeff;
         this.name = name;
         this.derivative;
+        this.zero = (this.coeff ? false : true);
     }
     
     print(f){
@@ -35,17 +37,36 @@ class Sum{
     constructor(elements){
         this.elements = elements;
         this.derivative;
+        for(var i = 0; i < this.elements.length;){
+            if(this.elements[i].zero)
+                this.elements.splice(i, 1);
+            else
+                i++;
+        }
+        this.zero;
+        if(!(this.elements.length))
+            this.zero = true;
+        else
+            this.zero = false;
     }
     
     print(f){
-        f.append("(");
-        for(var i = 0; i < this.elements.length; i ++){
-            if(i !== 0){
-                f.append(" + ");
+        if(this.zero)
+            f.append("0");
+        else{
+            if(this.elements.length > 1){
+                f.append("(");
             }
-            this.elements[i].print(f);
+            for(var i = 0; i < this.elements.length; i ++){
+                if(i !== 0){
+                    f.append(" + ");
+                }
+                this.elements[i].print(f);
+            }
+            if(this.elements.length > 1){
+                f.append(")");
+            }
         }
-        f.append(")");
     }
     
     diff(wrt){
@@ -63,6 +84,7 @@ class Difference{
         this.first = first;
         this.second = second;
         this.derivative;
+        this.zero = false;
     }
     
     print(f){
@@ -85,14 +107,22 @@ class Product{
         this.first = first;
         this.second = second;
         this.derivative;
+        if(this.first.zero || this.second.zero)
+            this.zero = true;
+        else
+            this.zero = false;
     }
     
     print(f){
-        f.append("(");
-        this.first.print(f);
-        f.append(" * ");
-        this.second.print(f);
-        f.append(")");
+        if(this.zero)
+            f.append("0");
+        else{
+            f.append("(");
+            this.first.print(f);
+            f.append(" * ");
+            this.second.print(f);
+            f.append(")");
+        }
     }
     
     diff(wrt){
@@ -109,6 +139,7 @@ class Quotient{
         this.first = first;
         this.second = second;
         this.derivative;
+        this.zero = false;
     }
     
     print(f){
@@ -134,6 +165,7 @@ class Logarithm{
     constructor(arg){
         this.argument = arg;
 	    this.derivative;
+	    this.zero = false;
     }
 
     print(f){
@@ -155,6 +187,7 @@ class Exponential{
         this.first = first;
         this.second = second;
         this.derivative;
+        this.zero = false;
     }
     
     print(f){
@@ -183,6 +216,7 @@ class Trig{
         this.argument = arg;
         this.type = type;
         this.derivative;
+        this.zero = false;
     }
     
     print(f){
