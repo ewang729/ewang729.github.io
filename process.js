@@ -1,39 +1,29 @@
-function Submission (form) {
+function Display (message){
     var o = document.getElementById("output");
     var f = document.createElement("p");
     f.setAttribute("class", "output_title");
-    o.innerHTML = "";
     o.appendChild(f);
+    f.append(message);
+    f = document.createElement("p");
+    f.setAttribute("class", "output_box");
+    o.appendChild(f);
+    return f;
+}
+
+function Submission (form) {
+    document.getElementById("output").innerHTML = "";
     var e = form.experimental.value;
     var respect = form.respect_to.value;
     var sh = shunting_yard(e);
-    f.append("Your input");
+    var str = "Your input";
     if(respect !== "")
-        f.append(", with respect to ");
-    f.append(respect);
-    f.append(":");
+        str += ", with respect to ";
+    str += respect;
+    str += ":";
     var ptr = parse(sh);
-    f = document.createElement("p");
-    f.setAttribute("class", "output_box");
-    o.appendChild(f);
-    ptr.print(f);
+    ptr.print(Display(str));
     ptr.diff(respect);
-    f.append(document.createElement("br"))
-    f = document.createElement("p");
-    f.setAttribute("class", "output_title");
-    o.appendChild(f);
-    f.append("In reverse Polish: ");
-    f = document.createElement("p");
-    f.setAttribute("class", "output_box");
-    o.appendChild(f);
-    f.append(sh);
-    f = document.createElement("p");
-    f.setAttribute("class", "output_title");
-    o.appendChild(f);
-    f.append("Derivative: ");
-    f = document.createElement("p");
-    f.setAttribute("class", "output_box");
-    o.appendChild(f);
-    ptr.derivative.print(f);
+    Display("In reverse Polish:").append(sh);
+    ptr.derivative.print(Display("Derivative:"));
     document.getElementById("reset_button").click();
 }
