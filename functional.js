@@ -12,6 +12,10 @@ class Constant {
     diff(wrt){
         this.derivative = new Constant(0);
     }
+    
+    eval(key){
+        return this.value;
+    }
 }
 
 class Variable{
@@ -30,6 +34,10 @@ class Variable{
     diff(wrt){
         if(wrt === this.name || wrt === "") this.derivative = new Constant(this.coeff);
         else this.derivative = new Constant(0);
+    }
+    
+    eval(key){
+        return this.coeff * key[this.name - 'a'];
     }
 }
 
@@ -77,6 +85,14 @@ class Sum{
         }
         this.derivative = new Sum(dele);
     }
+    
+    eval(key){
+        var sm = 0;
+        for(var i = 0; i < this.elements.length; i ++){
+            sm += this.elements[i].eval(key);
+        }
+        return sum;
+    }
 }
 
 class Difference{
@@ -99,6 +115,10 @@ class Difference{
         this.first.diff(wrt);
         this.second.diff(wrt);
         this.derivative = new Difference(this.first.derivative, this.second.derivative);
+    }
+    
+    eval(key){
+        return (this.first.eval(key) - this.second.eval(key));
     }
 }
 
@@ -136,6 +156,10 @@ class Product{
             this.derivative = new Sum([partial1, partial2]);
         }
     }
+    
+    eval(key){
+        return (this.first.eval(key) * this.second.eval(key));
+    }
 }
 
 class Quotient{
@@ -171,6 +195,10 @@ class Quotient{
             this.derivative = new Quotient(partial4, partial3);
         }
     }
+    
+    eval(key){
+        return (this.first.eval(key)/this.second.eval(key));
+    }
 }
 
 class Logarithm{
@@ -191,6 +219,10 @@ class Logarithm{
     	var partial1 = new Constant(1);
     	var partial2 = new Quotient(partial1, this.argument);
     	this.derivative = new Product(partial2, this.argument.derivative);
+    }
+    
+    eval(key){
+        return Math.log(this.argument.eval(key));
     }
 }
 
@@ -220,6 +252,10 @@ class Exponential{
         var partial5 = new Product(this.second.derivative, partial4);
         var partial6 = new Sum([partial3, partial5]);
         this.derivative = new Product(partial1, partial6);
+    }
+    
+    eval(key){
+        return (this.first.eval(key) ** this.second.eval(key));
     }
 }
 
@@ -254,6 +290,18 @@ class Trig{
             var partial1 = new Trig(this.argument, "cos");
             var partial2 = new Product(partial1, partial1);
             this.derivative = new Quotient(this.argument.derivative, partial2);
+        }
+    }
+    
+    eval(wrt){
+        if(this.type == "sin"){
+            return Math.sin(this.argument.eval(key));
+        }
+        else if(this.type == "cos"){
+            return Math.cos(this.argument.eval(key));
+        }
+        else{
+            return Math.tan(this.argument.eval(key));
         }
     }
 }
