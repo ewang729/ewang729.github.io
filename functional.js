@@ -126,11 +126,15 @@ class Product{
     }
     
     diff(wrt){
-        this.first.diff(wrt);
-        this.second.diff(wrt);
-        var partial1 = new Product(this.first.derivative, this.second);
-        var partial2 = new Product(this.first, this.second.derivative);
-        this.derivative = new Sum([partial1, partial2]);
+    	if(this.zero)
+    	    this.derivative = new Constant(0);
+        else{
+            this.first.diff(wrt);
+            this.second.diff(wrt);
+            var partial1 = new Product(this.first.derivative, this.second);
+            var partial2 = new Product(this.first, this.second.derivative);
+            this.derivative = new Sum([partial1, partial2]);
+        }
     }
 }
 
@@ -139,25 +143,33 @@ class Quotient{
         this.first = first;
         this.second = second;
         this.derivative;
-        this.zero = false;
+        this.zero = this.first.zero;
     }
     
     print(f){
-        f.append("(");
-        this.first.print(f);
-        f.append(" / ");
-        this.second.print(f);
-        f.append(")");
+        if(this.zero)
+            f.append("0");
+        else{
+            f.append("(");
+            this.first.print(f);
+            f.append(" / ");
+            this.second.print(f);
+            f.append(")");
+        }
     }
     
     diff(wrt){
-        this.first.diff(wrt);
-        this.second.diff(wrt);
-        var partial1 = new Product(this.first.derivative, this.second);
-        var partial2 = new Product(this.first, this.second.derivative);
-        var partial3 = new Product(this.second, this.second);
-        var partial4 = new Difference(partial1, partial2);
-        this.derivative = new Quotient(partial4, partial3);
+        if(this.zero)
+            this.derivative = new Constant(0);
+        else{
+            this.first.diff(wrt);
+            this.second.diff(wrt);
+            var partial1 = new Product(this.first.derivative, this.second);
+            var partial2 = new Product(this.first, this.second.derivative);
+            var partial3 = new Product(this.second, this.second);
+            var partial4 = new Difference(partial1, partial2);
+            this.derivative = new Quotient(partial4, partial3);
+        }
     }
 }
 
