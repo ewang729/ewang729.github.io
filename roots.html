@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Roots Calculator</title>
+    <script src = "functional.js"></script>
+	<script src = "newton.js"></script>
+	<script src = "process.js"></script>
+    <link rel = "stylesheet" href = "box_style.css">
+</head>
+<body>
+    <h2>Newton-Raphson Engine</h2>
+    <form id = input_area onsubmit="return false" method = "post">
+        <p>
+            <label>Input:</label>
+            <input type="text" name="function">
+            <label>Guess:</label>
+            <input type="text" name="guess" style = "width: 15px">
+            <input type="submit" value="Go" onclick = "Roots(this.form)">
+            <input type="reset" value="Reset" id = "reset_button" style = "display:none">
+        </p>
+    </form>
+    <p id = "output">
+        Input any function of one variable using the allowed operators - variables may be any lowercase letter (a - z). <br>
+        Allowed operators: <br>
+        - Basic operators (+, -, *, /, ^)<br>
+        - Logarithms (ln)<br>
+        - Trigonometric Functions (sin, cos, tan)<br>
+    </p>
+</body>
+</html>
