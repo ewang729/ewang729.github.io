@@ -13,9 +13,11 @@
     <form id = input_area onsubmit="return false" method = "post">
         <p>
             <label>Input:</label>
-            <input type="text" name="function">
+            <input type="text" id="func">
+			<label>Variable:</label>
+            <input type="text" id="wrt" style = "width: 9px">
             <label>Guess:</label>
-            <input type="text" name="guess" style = "width: 15px">
+            <input type="text" id="guess" style = "width: 15px">
             <input type="submit" value="Go" onclick = "Roots(this.form)">
             <input type="reset" value="Reset" id = "reset_button" style = "display:none">
         </p>
@@ -26,6 +28,8 @@
         - Basic operators (+, -, *, /, ^)<br>
         - Logarithms (ln)<br>
         - Trigonometric Functions (sin, cos, tan)<br>
+		<br>
+		Then input a guess near the value
     </p>
 </body>
 </html>
