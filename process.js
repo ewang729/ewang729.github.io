@@ -25,5 +25,16 @@ function Submission (form) {
     ptr.diff(respect);
     Display("In reverse Polish:").append(sh);
     ptr.derivative.print(Display("Derivative:"));
-    document.getElementById("reset_button").click();
+}
+
+function Roots (form) {
+	document.getElementById("output").innerHTML = "";
+	var func = form.func.value;
+	var sh = shunting_yard(func);
+	var ptr = parse(sh);
+	ptr.print(Display("Your input"));
+	var x = Newton(ptr, form.wrt.value, parseInt(form.guess.value), 30);
+	var str = "Root, near ";
+	str += form.guess.value;
+	Display(str).append(x);
 }
