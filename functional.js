@@ -37,7 +37,7 @@ class Variable{
     }
     
     eval(key){
-        return this.coeff * key[this.name - 'a'];
+        return this.coeff * key[this.name.charCodeAt(0) - 'a'.charCodeAt(0)];
     }
 }
 
@@ -293,7 +293,7 @@ class Trig{
         }
     }
     
-    eval(wrt){
+    eval(key){
         if(this.type == "sin"){
             return Math.sin(this.argument.eval(key));
         }
