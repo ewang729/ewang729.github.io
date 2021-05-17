@@ -91,7 +91,7 @@ class Sum{
         for(var i = 0; i < this.elements.length; i ++){
             sm += this.elements[i].eval(key);
         }
-        return sum;
+        return sm;
     }
 }
 
