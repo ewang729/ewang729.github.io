@@ -24,3 +24,14 @@ p{
     width: 100%;
     margin: auto;
 }
+.navbar {
+  list-style-type: none;
+}
+
+.navItem {
+  float: left;
+}
+
+.navItem a {
+  padding: 15px 15px;
+}
