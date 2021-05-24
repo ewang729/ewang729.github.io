@@ -49,28 +49,33 @@ function Roots (form) {
 	document.getElementById("output").innerHTML = "";
 	var func = form.func.value;
 	var sh = shunting_yard(func);
-	var respect = form.wrt.value;
-	var flag = false;
+	var respect = 'a';
+	var num = 0;
 	var ptr = parse(sh);
-	if(respect === ""){
-		for(var i = 0; i < 26; i ++){
-			if(global_vars[i] !== 0){
-				if(respect !== ""){
-					flag = true;
-					break;
-				}
-				respect = String.fromCharCode(i + 'a'.charCodeAt(0));
-			}
+	for(var i = 0; i < 26; i ++){
+		if(global_vars[i] !== 0){
+			num++;
+			respect = String.fromCharCode(i + 'a'.charCodeAt(0));
 		}
 	}
-	if(flag === false){
+	var g = 0.5;
+	if(form.guess.value !== ""){
+		g = parseInt(form.guess.value);
+	}
+	if(num === 1){
 		ptr.print(Display("Your input"));
-		var x = Newton(ptr, respect, parseInt(form.guess.value), 30);
+		var x = Newton(ptr, respect, g, 30);
 		var str = "Root, near ";
-		str += form.guess.value;
+		if(form.guess.value !== "")
+			str += form.guess.value;
+		else
+			str += "0.5";
 		Display(str).append(x);
 	}
-	else{
+	else if(num > 1){
 		Error("too many variables");
+	}
+	else{
+		Error("too few variables");
 	}
 }
