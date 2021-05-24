@@ -158,7 +158,7 @@ class Product{
     }
     
     eval(key){
-        return (this.first.eval(key) * this.second.eval(key));
+        return (((this.first).eval(key)) * ((this.second).eval(key)));
     }
 }
 
@@ -384,8 +384,13 @@ function shunting_yard(s) {
 	return polish;
 }
 
+var global_vars = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+
 function parse(s) {
     var stck = [];
+	for(var i = 0; i < 26; i ++){
+		global_vars[i] = 0;
+	}
     for (var i = 0; i < s.length; i++) {
     	if (s[i] === ' ') {
     		continue;
@@ -393,6 +398,7 @@ function parse(s) {
     	if (alphanumeric(s[i])){
     		if (s[i] >= 'a' && s[i] <= 'z') {
     			var v1 = new Variable(1, s[i]);
+				global_vars[s.charCodeAt(i) - 'a'.charCodeAt(0)] ++;
     			stck.push(v1);
     			continue;
     		}
@@ -404,6 +410,7 @@ function parse(s) {
     		}
     		if (i < s.length && s[i] >= 'a' && s[i] <= 'z') {
     		    var v2 = new Variable(numerical, s[i]);
+				global_vars[s.charCodeAt(i) - 'a'.charCodeAt(0)] ++;
     			stck.push(v2);
     			i++;
     		}
