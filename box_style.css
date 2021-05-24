@@ -24,6 +24,11 @@ p{
     width: 100%;
     margin: auto;
 }
+.error_box{
+    background-color: #f2aa91;
+    width: 100%;
+    margin: auto;
+}
 .navbar {
   list-style-type: none;
 }
