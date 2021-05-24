@@ -15,12 +15,18 @@ function Submission (form) {
     var e = form.experimental.value;
     var respect = form.respect_to.value;
     var sh = shunting_yard(e);
-    var str = "Your input";
-    if(respect !== "")
-        str += ", with respect to ";
-    str += respect;
-    str += ":";
     var ptr = parse(sh);
+	if(respect == ""){
+		for(var i = 0; i < 26; i ++){
+			if(global_vars[i] !== 0 && respect != "x"){
+				respect = String.fromCharCode(i + 'a'.charCodeAt(0));
+			}
+		}
+	}
+	var str = "Your input";
+    str += ", with respect to ";
+	str += respect;
+    str += ":";
     ptr.print(Display(str));
     ptr.diff(respect);
     Display("In reverse Polish:").append(sh);
@@ -33,7 +39,15 @@ function Roots (form) {
 	var sh = shunting_yard(func);
 	var ptr = parse(sh);
 	ptr.print(Display("Your input"));
-	var x = Newton(ptr, form.wrt.value, parseInt(form.guess.value), 30);
+	var respect = form.wrt.value;
+	if(respect === ""){
+		for(var i = 0; i < 26; i ++){
+			if(global_vars[i] !== 0){
+				respect = String.fromCharCode(i + 'a'.charCodeAt(0));
+			}
+		}
+	}
+	var x = Newton(ptr, respect, parseInt(form.guess.value), 30);
 	var str = "Root, near ";
 	str += form.guess.value;
 	Display(str).append(x);
