@@ -10,6 +10,18 @@ function Display (message){
     return f;
 }
 
+function Error(message){
+	var o = document.getElementById("output");
+    var f = document.createElement("p");
+    f.setAttribute("class", "output_title");
+    o.appendChild(f);
+    f.append("Error");
+	f = document.createElement("p");
+    f.setAttribute("class", "error_box");
+    o.appendChild(f);
+    f.append(message);
+}
+
 function Submission (form) {
     document.getElementById("output").innerHTML = "";
     var e = form.experimental.value;
@@ -37,18 +49,28 @@ function Roots (form) {
 	document.getElementById("output").innerHTML = "";
 	var func = form.func.value;
 	var sh = shunting_yard(func);
-	var ptr = parse(sh);
-	ptr.print(Display("Your input"));
 	var respect = form.wrt.value;
+	var flag = false;
+	var ptr = parse(sh);
 	if(respect === ""){
 		for(var i = 0; i < 26; i ++){
 			if(global_vars[i] !== 0){
+				if(respect !== ""){
+					flag = true;
+					break;
+				}
 				respect = String.fromCharCode(i + 'a'.charCodeAt(0));
 			}
 		}
 	}
-	var x = Newton(ptr, respect, parseInt(form.guess.value), 30);
-	var str = "Root, near ";
-	str += form.guess.value;
-	Display(str).append(x);
+	if(flag === false){
+		ptr.print(Display("Your input"));
+		var x = Newton(ptr, respect, parseInt(form.guess.value), 30);
+		var str = "Root, near ";
+		str += form.guess.value;
+		Display(str).append(x);
+	}
+	else{
+		Error("too many variables");
+	}
 }
