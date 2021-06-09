@@ -79,3 +79,47 @@ function Roots (form) {
 		Error("too few variables");
 	}
 }
+
+function Generate_Input(form){
+	document.getElementById("output").innerHTML = "";
+	var o = document.getElementById("input_area");
+	o.innerHTML = "";
+	var d1 = parseInt(form.dim1.value);
+	var d2 = parseInt(form.dim2.value);
+	var d3 = parseInt(form.dim3.value);
+	if(d1 > 50 || d2 > 50 || d3 > 50){
+		Error("Matrix Dimensions Too Large");
+		return;
+	}
+	o.innerHTML = "Matrix A values: ";
+	o.appendChild(document.createElement("br"));
+	for(var i = 0; i < d1; i ++){
+		for(var j = 0; j < d2; j ++){
+			var f = document.createElement("input");
+			f.setAttribute("type", "input");
+			f.setAttribute("style", "width: 15px");
+			f.setAttribute("id", "a_" + i.toString() + "_" + j.toString());
+			o.appendChild(f);
+		}
+		o.appendChild(document.createElement("br"));
+	}
+	o.appendChild(document.createElement("br"));
+	o.append("Matrix B values:");
+	o.appendChild(document.createElement("br"));
+	for(var i = 0; i < d2; i ++){
+		for(var j = 0; j < d3; j ++){
+			var f = document.createElement("input");
+			f.setAttribute("type", "input");
+			f.setAttribute("style", "width: 15px");
+			f.setAttribute("id", "b_" + i.toString() + "_" + j.toString());
+			o.appendChild(f);
+		}
+		o.appendChild(document.createElement("br"));
+	}
+	var b = document.createElement("input");
+	b.setAttribute("type", "submit");
+	b.setAttribute("value", "Go");
+	b.setAttribute("onclick", "readMatrix(" + form.dim1.value + ", " + form.dim2.value + ", " + form.dim3.value + ")");
+	o.appendChild(document.createElement("br"));
+	o.appendChild(b);
+}
