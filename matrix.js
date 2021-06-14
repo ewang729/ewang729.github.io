@@ -35,7 +35,58 @@ function Multiply(a, b){
 	return res;
 }
 
+function Invert(u){//Gauss-Jordan
+	var M = u;
+	var d = u.rows;
+	var inv = new Matrix(d, d);
+	for(var i = 0; i < d; i ++){
+		inv.array[i][i] = 1;
+	}
+	for(var i = 0; i < d; i ++){
+		for(var j = i + 1; j < d; j ++){
+			if(M.array[j][i] > M.array[i][i]){
+				for(var k = i; k < d; k ++){
+					var temp = M.array[j][k];
+					M.array[j][k] = M.array[i][k];
+					M.array[i][k] = temp;
+					temp = inv.array[j][k];
+					inv.array[j][k] = inv.array[i][k];
+					inv.array[i][k] = temp;
+				}
+			}
+		}
+		for(var j = i + 1; j < d; j ++){
+			var coeff = (M.array[j][i])/(M.array[i][i]);
+			for(var k = i; k < d; k ++){
+				M.array[j][k] -= coeff * M.array[i][k];
+			}
+			for(var k = 0; k < d; k ++){
+				inv.array[j][k] -= coeff * inv.array[i][k];
+			}
+		}
+	}
+	for(var i = 0; i < d; i ++){
+		for(var j = i - 1; j >= 0; j --){
+			var coeff = (M.array[j][i])/(M.array[i][i]);
+			for(var k = i; k < d; k ++){
+				M.array[j][k] -= coeff * M.array[i][k];
+			}
+			for(var k = 0; k < d; k ++){
+				inv.array[j][k] -= coeff * inv.array[i][k];
+			}
+		}
+	}
+	for(var i = 0; i < d; i ++){
+		var coeff = M.array[i][i];
+		for(var j = 0; j < d; j ++){
+			inv.array[i][j] /= coeff;
+		}
+	}
+	return inv;
+}
+
 function readMatrix(d1, d2, d3){
+	document.getElementById("output").innerHTML = "";
 	var A = new Matrix(d1, d2);
 	var B = new Matrix(d2, d3);
 	for(var i = 0; i < d1; i ++){
@@ -56,4 +107,8 @@ function readMatrix(d1, d2, d3){
 	}
 	var C = Multiply(A, B);
 	C.print(Display("Product:"));
+	if(d1 == d2){
+		var I = Invert(A);
+		I.print(Display("Inverse of A:"));
+	}
 }
