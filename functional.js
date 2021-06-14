@@ -309,6 +309,7 @@ class Trig{
 function alphanumeric(c){
     if(c >= '0' && c <= '9') return true;
     if(c >= 'a' && c <= 'z') return true;
+	if(c === '.') return true;
     return false;
 }
 
@@ -350,7 +351,6 @@ function shunting_yard(s) {
 			i--;
 			polish += " ";
 		}
-		//binary and unary functions here
 		else if (s[i] == '(') {
 			stck.push('(');
 		}
@@ -360,7 +360,6 @@ function shunting_yard(s) {
 				polish += c;
 				polish += " ";
 				stck.pop();
-				//function logic
 			}
 			stck.pop();
 		}
@@ -402,12 +401,12 @@ function parse(s) {
     			stck.push(v1);
     			continue;
     		}
-    		var numerical = 0;
-    		while (s[i] >= '0' && s[i] <= '9' && i < s.length) {
-    			numerical *= 10;
-    			numerical += (s[i] - '0');
+    		var numericstr = "";
+    		while (((s[i] >= '0' && s[i] <= '9') || s[i] === '.') && i < s.length) {
+    			numericstr += s[i];
     			i++;
     		}
+			var numerical = parseFloat(numericstr);
     		if (i < s.length && s[i] >= 'a' && s[i] <= 'z') {
     		    var v2 = new Variable(numerical, s[i]);
 				global_vars[s.charCodeAt(i) - 'a'.charCodeAt(0)] ++;
