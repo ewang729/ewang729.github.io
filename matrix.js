@@ -44,7 +44,7 @@ function Invert(u){//Gauss-Jordan
 	}
 	for(var i = 0; i < d; i ++){
 		for(var j = i + 1; j < d; j ++){
-			if(M.array[j][i] > M.array[i][i]){
+			if(Math.abs(M.array[j][i]) > Math.abs(M.array[i][i])){
 				for(var k = i; k < d; k ++){
 					var temp = M.array[j][k];
 					M.array[j][k] = M.array[i][k];
@@ -94,7 +94,7 @@ function readMatrix(d1, d2, d3){
 			var key = ("a_" + i.toString() + "_" + j.toString());
 			var txt = document.getElementById(key).value;
 			if(txt == "") txt = "0";
-			A.array[i][j] = parseInt(txt);
+			A.array[i][j] = parseFloat(txt);
 		}
 	}
 	for(var i = 0; i < d2; i ++){
@@ -102,7 +102,7 @@ function readMatrix(d1, d2, d3){
 			var key = ("b_" + i.toString() + "_" + j.toString());
 			var txt = document.getElementById(key).value;
 			if(txt == "") txt = "0";
-			B.array[i][j] = parseInt(txt);
+			B.array[i][j] = parseFloat(txt);
 		}
 	}
 	var C = Multiply(A, B);
