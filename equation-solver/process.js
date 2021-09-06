@@ -129,7 +129,7 @@ function Generate_Input(form){
 	var o = document.getElementById("input_area");
 	o.innerHTML = "";
 	var n = parseInt(form.num.value);
-	if(n > 20){
+	if(n > 26){
 		Error("Too many equations");
 		return;
 	}

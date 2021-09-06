@@ -13,6 +13,11 @@ p{
     margin: auto;
     text-align: left;
 }
+#info{
+	width: 50%;
+    margin: auto;
+    text-align: left;
+}
 .output_title{
     background-color: #eeeeee;
     width: 100%;

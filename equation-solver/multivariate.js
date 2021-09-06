@@ -42,8 +42,6 @@ function readEquations(num){
 			if(global_vars[j] == 1) all_vars[j] = 1;
 		}
 	}
-
-	/**over-constrained and underconstrained errors**/
 	
 	var varlist = [];
 	var guess = [];
@@ -54,16 +52,24 @@ function readEquations(num){
 		guess.push(0.7); //try to avoid stationary points
 	}
 	
+	if(varlist.length < num){
+		Error("Overconstrained");
+		return;
+	}
+	if(varlist.length > num){
+		Error("Underconstrained");
+		return;
+	}
+	
 	guess = Multivariate_Newton(flist, varlist, guess, 20);
-	var ans = "";
+	var result = Display("Result");
 	for(var i = 0; i < 26; i ++){
 		if(all_vars[i] == 1){
-			ans += (String.fromCharCode(i + 'a'.charCodeAt(0)));
-			ans += " = " 
-			ans += parseFloat(guess[i]);
-			ans += "\n";
+			result.append(String.fromCharCode(i + 'a'.charCodeAt(0)));
+			result.append(" = ");
+			result.append(parseFloat(guess[i]));
+			result.append(document.createElement("br"));
 		}
 	}
-	document.getElementById("output").append(ans);
 }
 
