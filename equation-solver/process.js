@@ -80,7 +80,7 @@ function Roots (form) {
 	}
 }
 
-function Generate_Input(form){
+function Generate_Matrix_Input(form){
 	document.getElementById("output").innerHTML = "";
 	var o = document.getElementById("input_area");
 	o.innerHTML = "";
@@ -120,6 +120,32 @@ function Generate_Input(form){
 	b.setAttribute("type", "submit");
 	b.setAttribute("value", "Go");
 	b.setAttribute("onclick", "readMatrix(" + form.dim1.value + ", " + form.dim2.value + ", " + form.dim3.value + ")");
+	o.appendChild(document.createElement("br"));
+	o.appendChild(b);
+}
+
+function Generate_Input(form){
+	document.getElementById("output").innerHTML = "";
+	var o = document.getElementById("input_area");
+	o.innerHTML = "";
+	var n = parseInt(form.num.value);
+	if(n > 20){
+		Error("Too many equations");
+		return;
+	}
+	o.innerHTML = "Equations: ";
+	o.appendChild(document.createElement("br"));
+	for(var i = 0; i < n; i ++){
+		var f = document.createElement("input");
+		f.setAttribute("type", "input");
+		f.setAttribute("style", "width: 500px");
+		f.setAttribute("id", "eq_" + i.toString());
+		o.appendChild(f);
+		o.appendChild(document.createElement("br"));
+	}
+	var b = document.createElement("input");
+	b.setAttribute("type", "submit");
+	b.setAttribute("value", "Go");
 	o.appendChild(document.createElement("br"));
 	o.appendChild(b);
 }
