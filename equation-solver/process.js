@@ -133,7 +133,7 @@ function Generate_Input(form){
 		Error("Too many equations");
 		return;
 	}
-	o.innerHTML = "Equations: ";
+	o.innerHTML = "Functions: ";
 	o.appendChild(document.createElement("br"));
 	for(var i = 0; i < n; i ++){
 		var f = document.createElement("input");
@@ -146,6 +146,7 @@ function Generate_Input(form){
 	var b = document.createElement("input");
 	b.setAttribute("type", "submit");
 	b.setAttribute("value", "Go");
+	b.setAttribute("onclick", "readEquations(" + form.num.value + ")");
 	o.appendChild(document.createElement("br"));
 	o.appendChild(b);
 }
