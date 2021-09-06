@@ -9,6 +9,7 @@
 </head>
 <body>
 	<ul class = "navbar">
+	  <li class = "navItem"><a href = "index.html">Multiple Equation Solver</a></li>
 	  <li class = "navItem"><a href = "derivative.html">Derivative Calculator</a></li>
 	  <li class = "navItem"><a href="roots.html">Roots Finder</a></li>
 	  <li class = "navItem"><a href="matrix.html">Matrix Calculator</a></li>
@@ -17,10 +18,10 @@
     <form id = input_area onsubmit="return false" method = "post">
         <p>
             <label>Input:</label>
-            <input type="text" name="experiment" id="experimental">
+            <input type="text" name="fnction" id="fnction">
             <label>Variable Name:</label>
             <input type="text" name="respect" id="respect_to" style = "width: 9px">
-            <input type="submit" value="Go" onclick = "Submission(this.form)">
+            <input type="submit" value="Go" onclick = "Derive(this.form)">
             <input type="reset" value="Reset" id = "reset_button" style = "display:none">
         </p>
     </form>

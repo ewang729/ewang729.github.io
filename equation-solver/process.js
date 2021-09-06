@@ -22,9 +22,9 @@ function Error(message){
     f.append(message);
 }
 
-function Submission (form) {
+function Derive (form) {
     document.getElementById("output").innerHTML = "";
-    var e = form.experimental.value;
+    var e = form.fnction.value;
     var respect = form.respect_to.value;
     var sh = shunting_yard(e);
     var ptr = parse(sh);
